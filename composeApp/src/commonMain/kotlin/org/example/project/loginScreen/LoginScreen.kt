@@ -12,7 +12,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,11 +24,10 @@ import kts_project_haidukov.composeapp.generated.resources.ic_show_password
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-internal fun LoginScreen(){
-
-    var loginText by remember { mutableStateOf("") }
-    var passwordText by remember { mutableStateOf("") }
-    var passwordVisible by remember { mutableStateOf(false) }
+internal fun LoginScreen() {
+    var loginText by rememberSaveable { mutableStateOf("") }
+    var passwordText by rememberSaveable { mutableStateOf("") }
+    var passwordVisible by rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = Modifier.statusBarsPadding().fillMaxSize(),
@@ -50,7 +49,7 @@ internal fun LoginScreen(){
                 val image = if (passwordVisible) Res.drawable.ic_hide_password else Res.drawable.ic_show_password
                 val description = if (passwordVisible) "Hide password" else "Show password"
                 IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                    Icon( painterResource(image), description )
+                    Icon(painterResource(image), description)
                 }
             }
         )
@@ -60,7 +59,7 @@ internal fun LoginScreen(){
                 loginText = ""
                 passwordText = ""
             }
-        ){
+        ) {
             Text("Login")
         }
     }

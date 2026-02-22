@@ -10,7 +10,6 @@ import org.example.project.appNavigate.AppNavigate
 @Preview
 fun App() {
     MaterialTheme {
-        val navController = rememberNavController()
-        AppNavigate(navController = navController)
+        AppNavigate()
     }
 }

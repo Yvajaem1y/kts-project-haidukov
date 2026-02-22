@@ -4,17 +4,21 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import kotlinx.serialization.Serializable
 import org.example.project.helloScreen.HelloScreen
 import org.example.project.loginScreen.LoginScreen
 
 private sealed class Routes(val route: String) {
+    @Serializable
     object NavigateHelloScreen : Routes("home")
-    object NavigateLoginScreen : Routes("contact")
+    @Serializable
+    object NavigateLoginScreen : Routes("login")
 }
 
 @Composable
 internal fun AppNavigate(
-    navController : NavHostController
+    navController : NavHostController = rememberNavController()
 ){
     NavHost(navController = navController, startDestination = Routes.NavigateHelloScreen.route) {
 
