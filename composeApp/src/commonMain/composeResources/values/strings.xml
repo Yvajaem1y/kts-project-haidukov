@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Login screen strings -->
+    <string name="login_placeholder">Enter your login</string>
+    <string name="password_placeholder">Enter your password</string>
+    <string name="hide_password">Hide password</string>
+    <string name="show_password">Show password</string>
+    <string name="login_button">Login</string>
+
+    <!-- Hello screen strings -->
+    <string name="hello_message">Hello</string>
+    <string name="go_to_login_button">Go to login</string>
+    <string name="image_description">Welcome image</string>
+</resources>
