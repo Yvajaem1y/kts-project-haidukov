@@ -64,7 +64,8 @@ internal fun LoginScreen(
                 onPasswordVisibilityChange = { viewModel.onPasswordVisibilityChange() },
                 loginButtonState = uiState.loginButtonState,
                 onLoginButtonClick = { viewModel.onLoginButtonClick() },
-                error = uiState.error)
+                error = uiState.error
+            )
         }
     }
 
@@ -140,7 +141,7 @@ private fun LoginFieldsAndButton(
                 }
             }
 
-            if (error!=null){
+            if (error != null) {
                 Text(text = error.message ?: stringResource(Res.string.unknown_error))
             }
         }

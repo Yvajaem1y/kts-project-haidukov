@@ -48,7 +48,12 @@ class LoginViewModel() : BaseViewModel<LoginUiState>(LoginUiState()) {
                     updateState { copy(loginButtonState = ButtonState.IsSuccess) }
                     _events.emit(LoginUiEvent.LoginSuccessEvent)
                 } else {
-                    updateState { copy(loginButtonState = ButtonState.IsError, error = IllegalStateException("Don't use the login \"Pomidor\"")) }
+                    updateState {
+                        copy(
+                            loginButtonState = ButtonState.IsError,
+                            error = IllegalStateException("Don't use the login \"Pomidor\"")
+                        )
+                    }
                 }
 
             }

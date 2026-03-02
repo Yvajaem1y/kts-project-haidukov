@@ -43,7 +43,7 @@ object MockDatabase {
         )
     )
 
-    fun getList() : List<User>{
+    fun getList(): List<User> {
         return list
     }
 }
