@@ -31,11 +31,12 @@ internal fun HelloScreen(
         verticalArrangement = Arrangement.Center
     ) {
         AsyncImage(
-            model = "https://avatars.mds.yandex.net/i?id=ccc69626162807c656adfabaf538e35e_l-10340155-images-thumbs&n=13",
+            model = "https://cs12.pikabu.ru/post_img/2020/12/17/0/og_og_1608153151237810491.jpg",
             contentDescription = stringResource(Res.string.image_description),
             placeholder = painterResource(Res.drawable.ic_empty_photo),
             modifier = Modifier.size(300.dp),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            error = painterResource(Res.drawable.ic_empty_photo),
         )
 
         Text(

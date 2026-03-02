@@ -13,10 +13,14 @@ coilCompose = "3.3.0"
 composeMultiplatform = "1.10.0"
 junit = "4.13.2"
 kotlin = "2.3.0"
+lifecycleViewmodelKtx = "2.10.0"
+logger = "1.2.1"
 material3 = "1.10.0-alpha05"
 navigationComposeVersion = "2.9.2"
+immutableCollectionVersion = "0.4.0"
 
 [libraries]
+androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -36,7 +40,10 @@ compose-material3 = { module = "org.jetbrains.compose.material3:material3", vers
 compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMultiplatform" }
 compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "composeMultiplatform" }
 compose-uiToolingPreview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "composeMultiplatform" }
+logger = { module = "io.github.shivathapaa:logger", version.ref = "logger" }
+logger-android = { module = "io.github.shivathapaa:logger-android", version.ref = "logger" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationComposeVersion" }
+kotlinx-collections-immutable = {module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "immutableCollectionVersion"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

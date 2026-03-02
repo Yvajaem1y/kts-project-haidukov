@@ -6,9 +6,17 @@
     <string name="hide_password">Hide password</string>
     <string name="show_password">Show password</string>
     <string name="login_button">Login</string>
+    <string name="success_button">Success</string>
+    <string name="button_error">Try again</string>
 
     <!-- Hello screen strings -->
     <string name="hello_message">Hello</string>
     <string name="go_to_login_button">Go to login</string>
     <string name="image_description">Welcome image</string>
+
+    <!-- Main screen strings -->
+    <string name="online">online</string>
+    <string name="user_avatar">userAvatar</string>
+    <string name="user_avatar_placeholder">userAvatar placeholder</string>
+    <string name="unknown_error">Unknown error</string>
 </resources>
