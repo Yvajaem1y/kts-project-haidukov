@@ -1,4 +1,4 @@
-package org.example.project.mockDatabase
+package org.example.project.presentation.mockDatabase
 
 
 object MockDatabase {

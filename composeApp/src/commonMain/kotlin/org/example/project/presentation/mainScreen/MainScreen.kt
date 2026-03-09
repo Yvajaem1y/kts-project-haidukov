@@ -1,4 +1,4 @@
-package org.example.project.mainScreen
+package org.example.project.presentation.mainScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -32,7 +32,7 @@ import kts_project_haidukov.composeapp.generated.resources.ic_empty_photo
 import kts_project_haidukov.composeapp.generated.resources.online
 import kts_project_haidukov.composeapp.generated.resources.user_avatar
 import kts_project_haidukov.composeapp.generated.resources.user_avatar_placeholder
-import org.example.project.mockDatabase.User
+import org.example.project.presentation.mockDatabase.User
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 

@@ -1,11 +1,15 @@
-package org.example.project.loginScreen
+package org.example.project.presentation.loginScreen
+
+import org.example.project.domain.models.User
 
 data class LoginUiState(
+    val domain: String = "",
     val login: String = "",
     val password: String = "",
     val loginButtonState: ButtonState = ButtonState.IsNotActive,
     val isPasswordVisible: Boolean = false,
-    val error: Throwable? = null
+    val error: Throwable? = null,
+    val user: User? = null
 )
 
 sealed class ButtonState {

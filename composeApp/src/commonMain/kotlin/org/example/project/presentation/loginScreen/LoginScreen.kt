@@ -1,4 +1,4 @@
-package org.example.project.loginScreen
+package org.example.project.presentation.loginScreen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -140,6 +140,7 @@ private fun LoginFieldsAndButton(
                     else -> Text(stringResource(Res.string.login_button))
                 }
             }
+
 
             if (error != null) {
                 Text(text = error.message ?: stringResource(Res.string.unknown_error))

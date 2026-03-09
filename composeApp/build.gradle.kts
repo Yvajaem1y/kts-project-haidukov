@@ -1,4 +1,4 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
@@ -29,7 +30,19 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
+
+            implementation(libs.ktor.client.okhttp)
+
+            implementation(libs.koin.android)
+            implementation(libs.koin.compose)
         }
+
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+
+            implementation(libs.koin.compose)
+        }
+
         commonMain.dependencies {
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
@@ -53,6 +66,36 @@ kotlin {
             implementation(libs.kotlinx.collections.immutable)
 
             implementation(libs.logger)
+
+            // Ktor
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.ktor.client.logging)
+            implementation(libs.ktor.client.websockets)
+
+            // Kotlinx
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.kotlinx.datetime)
+
+            // Koin for DI
+            implementation(libs.koin.core)
+
+            // Napier for logging
+            implementation(libs.napier)
+
+            // Settings (multiplatform preferences)
+            implementation(libs.multiplatform.settings)
+            implementation(libs.multiplatform.settings.coroutines)
+
+            // Koin
+            implementation(libs.koin.core)
+
+            // Settings
+            implementation(libs.multiplatform.settings)
+            implementation(libs.multiplatform.settings.coroutines)
+            implementation(libs.multiplatform.settings.serialization)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
