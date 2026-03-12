@@ -8,7 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.serialization.Serializable
 import org.example.project.presentation.helloScreen.HelloScreen
 import org.example.project.presentation.loginScreen.LoginScreen
-import org.example.project.presentation.mainScreen.MainScreen
+import org.example.project.presentation.mainScreenWithNavigation.MainScreenWithNavigation
 
 @Serializable
 private sealed class Routes(val route: String) {
@@ -25,9 +25,12 @@ internal fun AppNavigate(
 
         composable(Routes.NavigateHelloScreen.route) {
             HelloScreen {
-                navController.navigate(
-                    Routes.NavigateLoginScreen.route
-                )
+//                navController.navigate(
+//                    Routes.NavigateLoginScreen.route
+//                )
+                navController.navigate(Routes.NavigateMainScreen.route) {
+                    popUpTo(0) { inclusive = true }
+                }
             }
         }
 
@@ -40,7 +43,7 @@ internal fun AppNavigate(
         }
 
         composable(Routes.NavigateMainScreen.route) {
-            MainScreen()
+            MainScreenWithNavigation()
         }
 
     }

@@ -18,6 +18,7 @@ lifecycleViewmodelKtx = "2.10.0"
 logger = "1.2.1"
 material3 = "1.10.0-alpha05"
 napier = "2.7.1"
+navigationCompose = "2.9.7"
 navigationComposeVersion = "2.9.2"
 immutableCollectionVersion = "0.4.0"
 koin = "4.1.1"
@@ -25,6 +26,7 @@ securityCrypto = "1.1.0"
 
 [libraries]
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
 appauth = { module = "net.openid:appauth", version.ref = "appauth" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }

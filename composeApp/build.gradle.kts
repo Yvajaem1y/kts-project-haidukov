@@ -30,22 +30,24 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
 
+            //Koin
             implementation(libs.koin.android)
+
+            //Security
             implementation(libs.androidx.security.crypto)
 
+            //AppAuth
             implementation(libs.appauth)
         }
         commonMain.dependencies {
-            implementation(libs.koin.core)
-            implementation(libs.koin.compose)
-            implementation(libs.koin.core.viewmodel)
-
+            //Compose
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
             implementation(libs.compose.ui)
             implementation(libs.compose.components.resources)
             implementation(libs.compose.uiToolingPreview)
+            implementation(libs.androidx.navigation.compose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
             //Navigation
@@ -59,13 +61,19 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel.ktx)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
 
+            //Collections
             implementation(libs.kotlinx.collections.immutable)
 
-            implementation(libs.logger)
-
+            //Logging
             implementation(libs.napier)
 
+            //AppAuth
             implementation(libs.appauth)
+
+            //Koin
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.core.viewmodel)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
