@@ -29,8 +29,17 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
+
+            implementation(libs.koin.android)
+            implementation(libs.androidx.security.crypto)
+
+            implementation(libs.appauth)
         }
         commonMain.dependencies {
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.core.viewmodel)
+
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
@@ -53,6 +62,10 @@ kotlin {
             implementation(libs.kotlinx.collections.immutable)
 
             implementation(libs.logger)
+
+            implementation(libs.napier)
+
+            implementation(libs.appauth)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -70,7 +83,10 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+
+        manifestPlaceholders["appAuthRedirectScheme"] = "kts.school.haidukov"
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"

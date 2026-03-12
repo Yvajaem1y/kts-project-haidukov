@@ -1,12 +1,11 @@
-package org.example.project.mainScreen
+package org.example.project.presentation.mainScreen
 
 import kotlinx.collections.immutable.toImmutableList
-import org.example.project.BaseViewModel
-import org.example.project.mockDatabase.MockDatabase
+import org.example.project.presentation.mockDatabase.MockDatabase
 
 class MainViewModel(
     private val database: MockDatabase = MockDatabase
-) : BaseViewModel<MainUiState>(MainUiState()) {
+) : org.example.project.presentation.BaseViewModel<MainUiState>(MainUiState()) {
 
     init {
         updateState {
