@@ -8,7 +8,5 @@ import org.example.project.presentation.appNavigate.AppNavigate
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
-        AppNavigate()
-    }
+    AppNavigate()
 }

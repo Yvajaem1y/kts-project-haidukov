@@ -11,7 +11,7 @@ import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.TokenRequest
 import org.example.project.oAuth.models.AuthRepository
-import org.example.project.presentation.BaseViewModel
+import org.example.project.presentation.common.BaseViewModel
 
 class AndroidLoginViewModel(
     private val authService: AuthorizationService

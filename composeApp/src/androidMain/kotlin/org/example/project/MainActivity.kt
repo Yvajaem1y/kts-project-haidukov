@@ -1,29 +1,29 @@
 package org.example.project
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import org.example.project.di.platformModule
+import io.github.aakira.napier.DebugAntilog
+import io.github.aakira.napier.Napier
 import org.example.project.presentation.App
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
+import org.example.project.presentation.common.GitHubTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
-        startKoin {
-            androidContext(this@MainActivity)
-            modules(platformModule)
-        }
+        enableEdgeToEdge()
+
+        Napier.base(DebugAntilog())
 
         setContent {
-            App()
+            GitHubTheme {
+                App()
+            }
         }
     }
 }
