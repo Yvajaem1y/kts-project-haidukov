@@ -10,6 +10,7 @@ data class SearchRepositoriesResponseDTO(
 
 @Serializable
 data class RepositoryPreviewDTO(
+    @SerialName("id") val id : Long,
     @SerialName("name") val repositoryName: String,
     @SerialName("description") val description: String? = null ,
     @SerialName("language") val language: String? = null,

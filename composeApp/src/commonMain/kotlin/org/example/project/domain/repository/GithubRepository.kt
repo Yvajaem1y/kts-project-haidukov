@@ -8,5 +8,6 @@ import org.example.project.data.remote_database.models.ServerItemsWrapper
 import org.example.project.domain.models.RepositoryPreview
 
 interface GithubRepository {
-    suspend fun searchRepository(query: String, perPage : Int, page : Int) : Flow<RequestResponse<List<RepositoryPreview>>>
+    suspend fun getInitialRepositoriesDataByQuery(query: String, perPage : Int) : Flow<RequestResponse<List<RepositoryPreview>>>
+    suspend fun searchNewRepositoriesByQuery(query: String, perPage : Int, page : Int) : Flow<RequestResponse<List<RepositoryPreview>>>
 }

@@ -14,7 +14,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -37,7 +39,6 @@ import coil3.compose.AsyncImage
 import kotlinx.collections.immutable.ImmutableList
 import kts_project_haidukov.composeapp.generated.resources.Res
 import kts_project_haidukov.composeapp.generated.resources.ic_empty_photo
-import kts_project_haidukov.composeapp.generated.resources.image_description
 import kts_project_haidukov.composeapp.generated.resources.load_more
 import kts_project_haidukov.composeapp.generated.resources.no_repositories_description
 import kts_project_haidukov.composeapp.generated.resources.no_repositories_title
@@ -58,6 +59,7 @@ fun RepositoriesScreen() {
     val viewModel: RepositoriesScreenViewModel = koinViewModel()
     val currentUiState by viewModel.state.collectAsState()
     val colors = GitHubTheme.colors
+    val scrollState = rememberLazyListState()
 
     Column(
         modifier = Modifier
@@ -94,7 +96,8 @@ fun RepositoriesScreen() {
             is RequestResponseUiState.InProgress -> {
                 InProgressScreen(
                     list = curState.item,
-                    colors = colors
+                    colors = colors,
+                    scrollState = scrollState
                 )
             }
 
@@ -107,15 +110,17 @@ fun RepositoriesScreen() {
                     list = curState.item,
                     error = curState.error,
                     colors = colors,
-                    onRetry = { viewModel.getRepositories() }
+                    onRetry = { viewModel.getInitialRepositories() },
+                    scrollState = scrollState
                 )
             }
 
             is RequestResponseUiState.OnSuccess -> {
                 OnSuccessLoadingScreen(
                     list = curState.item,
-                    onLoadMore = { viewModel.getRepositories() },
-                    colors = colors
+                    onLoadMore = { viewModel.searchNewRepositories() },
+                    colors = colors,
+                    scrollState = scrollState
                 )
             }
         }
@@ -126,11 +131,13 @@ fun RepositoriesScreen() {
 private fun OnSuccessLoadingScreen(
     list: ImmutableList<RepositoryPreview>,
     onLoadMore: () -> Unit,
-    colors: GitHubColors
+    colors: GitHubColors,
+    scrollState: LazyListState
 ) {
     RepositoriesListScreen(
         list = list,
         colors = colors,
+        scrollState = scrollState,
         footerContent = {
             Button(
                 onClick = onLoadMore,
@@ -152,11 +159,13 @@ private fun OnSuccessLoadingScreen(
 @Composable
 private fun InProgressScreen(
     list: ImmutableList<RepositoryPreview>,
-    colors: GitHubColors
+    colors: GitHubColors,
+    scrollState: LazyListState
 ) {
     RepositoriesListScreen(
         list = list,
         colors = colors,
+        scrollState = scrollState,
         footerContent = {
             Box(
                 modifier = Modifier
@@ -179,7 +188,8 @@ private fun OnFailureLoadingScreen(
     list: ImmutableList<RepositoryPreview>?,
     error: Throwable,
     colors: GitHubColors,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    scrollState: LazyListState
 ) {
     Column {
         Surface(
@@ -197,6 +207,7 @@ private fun OnFailureLoadingScreen(
             RepositoriesListScreen(
                 list = list,
                 colors = colors,
+                scrollState = scrollState,
                 footerContent = {
                     Button(
                         onClick = onRetry,
@@ -247,10 +258,12 @@ private fun RepositoriesListScreen(
     list: ImmutableList<RepositoryPreview>,
     colors: GitHubColors,
     footerContent: @Composable () -> Unit,
+    scrollState: LazyListState,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        state = scrollState
     ) {
         items(
             items = list,

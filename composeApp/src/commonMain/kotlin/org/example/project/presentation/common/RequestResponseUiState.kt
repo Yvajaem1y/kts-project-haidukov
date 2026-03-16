@@ -11,8 +11,8 @@ sealed class RequestResponseUiState<out T> {
 
 internal fun <T> RequestResponse<T>.toUiState(): RequestResponseUiState<T> {
     return when(this){
-        is RequestResponse.InProgress -> RequestResponseUiState.InProgress(item = item)
-        is RequestResponse.OnError -> RequestResponseUiState.OnError(error = error, item = item)
-        is RequestResponse.OnSuccess -> RequestResponseUiState.OnSuccess(item)
+        is RequestResponse.InProgress -> RequestResponseUiState.InProgress(item = data)
+        is RequestResponse.OnError -> RequestResponseUiState.OnError(error = error, item = data)
+        is RequestResponse.OnSuccess -> RequestResponseUiState.OnSuccess(data)
     }
 }

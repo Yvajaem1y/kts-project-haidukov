@@ -5,11 +5,13 @@ import kotlinx.serialization.Serializable
 
 
 data class RepositoryPreview(
+    val id: Long, // Спорно возможно не нужен
     val repositoryName: String,
     val description: String,
     val language: String,
     val starsCount: Int,
     val owner: Owner,
+    val lastUpdated: Long
     )
 
 data class Owner(
