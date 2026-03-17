@@ -1,4 +1,4 @@
-package org.example.project.presentation.loginScreen
+package org.example.project.presentation.authorizationScreen
 
 import android.content.Intent
 import androidx.browser.customtabs.CustomTabsIntent
@@ -10,14 +10,17 @@ import kotlinx.coroutines.launch
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.TokenRequest
+import org.example.project.data.local_database.dataStore.DataStoreRepository
 import org.example.project.oAuth.models.AuthRepository
 import org.example.project.presentation.common.BaseViewModel
 
-class AndroidLoginViewModel(
-    private val authService: AuthorizationService
+class AndroidAuthorizationViewModel(
+    private val authService: AuthorizationService,
+    private val dataStoreRepository: DataStoreRepository,
 ) : BaseViewModel<LoginUiState>(LoginUiState()) {
 
-    private val authRepository = AuthRepository()
+    private val authRepository = AuthRepository(
+        dataStore = dataStoreRepository)
 
     private val _openAuthPageFlow = MutableSharedFlow<Intent>()
     val openAuthPageFlow: SharedFlow<Intent> = _openAuthPageFlow.asSharedFlow()

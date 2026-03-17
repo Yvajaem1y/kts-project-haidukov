@@ -1,4 +1,4 @@
-package org.example.project.presentation.loginScreen
+package org.example.project.presentation.authorizationScreen
 
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -17,7 +17,7 @@ import org.koin.compose.viewmodel.koinViewModel
 actual fun LoginScreen(
     navigateToMain: () -> Unit
 ) {
-    val viewModel: AndroidLoginViewModel = koinViewModel()
+    val viewModel: AndroidAuthorizationViewModel = koinViewModel()
     val curUiState by viewModel.state.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -56,7 +56,7 @@ actual fun LoginScreen(
 
 private fun handleAuthResponse(
     intent: Intent,
-    viewModel: AndroidLoginViewModel
+    viewModel: AndroidAuthorizationViewModel
 ) {
     val exception = AuthorizationException.fromIntent(intent)
     val tokenExchangeRequest = AuthorizationResponse.fromIntent(intent)

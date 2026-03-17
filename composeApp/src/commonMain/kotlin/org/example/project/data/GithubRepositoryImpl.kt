@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
-import org.example.project.data.local_database.AppDatabase
-import org.example.project.data.local_database.roomDAO.RoomDAO
+import org.example.project.data.local_database.room.AppDatabase
+import org.example.project.data.local_database.room.roomDAO.RoomDAO
 import org.example.project.data.remote_database.GithubApi
 import org.example.project.data.remote_database.models.RequestResponse
 import org.example.project.data.utils.MergeStrategy
@@ -66,6 +66,7 @@ class GithubRepositoryImpl(
             }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override suspend fun searchNewRepositoriesByQuery(
         query: String,
         perPage: Int,

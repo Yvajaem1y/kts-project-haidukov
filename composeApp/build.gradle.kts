@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -42,6 +41,7 @@ kotlin {
             //AppAuth
             implementation(libs.appauth)
 
+            //Ktor
             implementation(libs.ktor.client.okhttp)
         }
 
@@ -85,16 +85,23 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.core.viewmodel)
 
+            //Ktor
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.ktor.client.logging)
             implementation(libs.kotlinx.serialization.json)
 
+            //Coroutines
             implementation(libs.kotlinx.coroutines.core)
 
+            //Room
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
+
+            //DataStore
+            implementation(libs.androidx.datastore)
+            implementation(libs.androidx.datastore.preferences)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

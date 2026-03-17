@@ -3,6 +3,7 @@ package org.example.project.data.local_database
 import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import org.example.project.data.local_database.room.AppDatabase
 
 fun getDatabaseBuilder(ctx: Context): RoomDatabase.Builder<AppDatabase> {
     val appContext = ctx.applicationContext

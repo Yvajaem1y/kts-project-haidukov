@@ -35,12 +35,14 @@ import kts_project_haidukov.composeapp.generated.resources.image_description
 import org.example.project.presentation.common.GitHubTheme
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun HelloScreen(
     goToLogin: () -> Unit,
 ) {
     val colors = GitHubTheme.colors
+    val viewModel: HelloScreenViewModel = koinViewModel()
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -84,7 +86,10 @@ internal fun HelloScreen(
             Spacer(modifier = Modifier.height(48.dp))
 
             Button(
-                onClick = { goToLogin() },
+                onClick = {
+                    viewModel.onboardingIsShow()
+                    goToLogin()
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colors.primary,
                     contentColor = colors.textOnColor
@@ -106,7 +111,7 @@ internal fun HelloScreen(
                 text = stringResource(Res.string.continue_as_guest),
                 color = colors.textLink,
                 style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.clickable {  }
+                modifier = Modifier.clickable { }
             )
         }
     }

@@ -1,4 +1,4 @@
-package org.example.project.presentation.loginScreen
+package org.example.project.presentation.authorizationScreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

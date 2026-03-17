@@ -85,9 +85,3 @@ object AppAuth {
         return ClientSecretPost(AuthConfig.CLIENT_SECRET)
     }
 }
-
-data class TokensModel(
-    val accessToken: String,
-    val refreshToken: String,
-    val idToken: String,
-)

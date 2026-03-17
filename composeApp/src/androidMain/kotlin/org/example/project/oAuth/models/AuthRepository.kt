@@ -4,17 +4,22 @@ import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.EndSessionRequest
 import net.openid.appauth.TokenRequest
+import org.example.project.data.local_database.dataStore.DataStoreRepository
 
-class AuthRepository {
+class AuthRepository(
+    val dataStore : DataStoreRepository
+) {
 
     fun corruptAccessToken() {
         TokenStorage.accessToken = "fake token"
     }
 
-    fun logout() {
+    suspend fun logout() {
         TokenStorage.accessToken = null
         TokenStorage.refreshToken = null
         TokenStorage.idToken = null
+
+        dataStore.logOut()
     }
 
     fun getAuthRequest(): AuthorizationRequest {
@@ -29,9 +34,11 @@ class AuthRepository {
         authService: AuthorizationService,
         tokenRequest: TokenRequest,
     ) {
-        val tokens = AppAuth.performTokenRequestSuspend(authService, tokenRequest)
+        val tokens : TokensModel = AppAuth.performTokenRequestSuspend(authService, tokenRequest)
         TokenStorage.accessToken = tokens.accessToken
         TokenStorage.refreshToken = tokens.refreshToken
         TokenStorage.idToken = tokens.idToken
+
+        dataStore.authorizationSuccess(tokens = tokens)
     }
 }

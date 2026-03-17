@@ -1,4 +1,4 @@
-package org.example.project.data.local_database.models
+package org.example.project.data.local_database.room.models
 
 import androidx.room.Embedded
 import androidx.room.Entity

@@ -1,7 +1,7 @@
 package org.example.project.data.utils
 
-import org.example.project.data.local_database.models.OwnerDBO
-import org.example.project.data.local_database.models.RepositoryPreviewDBO
+import org.example.project.data.local_database.room.models.OwnerDBO
+import org.example.project.data.local_database.room.models.RepositoryPreviewDBO
 import org.example.project.data.remote_database.models.OwnerDTO
 import org.example.project.data.remote_database.models.RepositoryPreviewDTO
 import org.example.project.domain.models.Owner
