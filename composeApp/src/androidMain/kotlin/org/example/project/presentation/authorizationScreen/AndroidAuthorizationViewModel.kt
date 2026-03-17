@@ -20,9 +20,10 @@ class AndroidAuthorizationViewModel(
 ) : BaseViewModel<LoginUiState>(LoginUiState()) {
 
     private val authRepository = AuthRepository(
-        dataStore = dataStoreRepository)
+        dataStore = dataStoreRepository
+    )
 
-    private val _openAuthPageFlow = MutableSharedFlow<Intent>()
+    private val _openAuthPageFlow = MutableSharedFlow<Intent>(replay = 1)
     val openAuthPageFlow: SharedFlow<Intent> = _openAuthPageFlow.asSharedFlow()
 
     private val _events = MutableSharedFlow<LoginUiEvent>()
@@ -51,6 +52,7 @@ class AndroidAuthorizationViewModel(
     }
 
     fun openLoginPage() {
+        updateState { copy(isLoginPageOpened = true) }
         viewModelScope.launch {
             try {
                 val authRequest = authRepository.getAuthRequest()
