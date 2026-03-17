@@ -21,12 +21,15 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
+import androidx.compose.material3.pulltorefresh.PullToRefreshState
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -60,11 +63,10 @@ fun RepositoriesScreen() {
     val currentUiState by viewModel.state.collectAsState()
     val colors = GitHubTheme.colors
     val scrollState = rememberLazyListState()
+    val state: PullToRefreshState = rememberPullToRefreshState()
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colors.backgroundPrimary)
+        modifier = Modifier.fillMaxSize().background(colors.backgroundPrimary)
     ) {
         TextField(
             value = currentUiState.query,
@@ -75,9 +77,7 @@ fun RepositoriesScreen() {
                     color = colors.textTertiary
                 )
             },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
             colors = TextFieldDefaults.colors(
                 focusedTextColor = colors.textPrimary,
                 unfocusedTextColor = colors.textSecondary,
@@ -92,36 +92,51 @@ fun RepositoriesScreen() {
             shape = RoundedCornerShape(12.dp)
         )
 
-        when (val curState = currentUiState.requestResultWithRepositories) {
-            is RequestResponseUiState.InProgress -> {
-                InProgressScreen(
-                    list = curState.item,
-                    colors = colors,
-                    scrollState = scrollState
+        PullToRefreshBox(
+            modifier = Modifier.fillMaxSize(),
+            isRefreshing = (currentUiState.requestResultWithRepositories is RequestResponseUiState.InProgress),
+            onRefresh = { viewModel.getInitialRepositories() },
+            state = state,
+            indicator = {
+                Indicator(
+                    modifier = Modifier.align(Alignment.TopCenter),
+                    isRefreshing = (currentUiState.requestResultWithRepositories is RequestResponseUiState.InProgress),
+                    color = colors.primary,
+                    containerColor = colors.backgroundPrimary,
+                    state = state,
                 )
-            }
+            }) {
+            when (val curState = currentUiState.requestResultWithRepositories) {
+                is RequestResponseUiState.InProgress -> {
+                    RepositoriesListScreen(
+                        list = curState.item,
+                        colors = colors,
+                        scrollState = scrollState,
+                        footerContent = {})
+                }
 
-            RequestResponseUiState.None -> {
-                EmptyScreen(colors = colors)
-            }
+                RequestResponseUiState.None -> {
+                    EmptyScreen(colors = colors)
+                }
 
-            is RequestResponseUiState.OnError -> {
-                OnFailureLoadingScreen(
-                    list = curState.item,
-                    error = curState.error,
-                    colors = colors,
-                    onRetry = { viewModel.getInitialRepositories() },
-                    scrollState = scrollState
-                )
-            }
+                is RequestResponseUiState.OnError -> {
+                    OnFailureLoadingScreen(
+                        list = curState.item,
+                        error = curState.error,
+                        colors = colors,
+                        onRetry = { viewModel.getInitialRepositories() },
+                        scrollState = scrollState
+                    )
+                }
 
-            is RequestResponseUiState.OnSuccess -> {
-                OnSuccessLoadingScreen(
-                    list = curState.item,
-                    onLoadMore = { viewModel.searchNewRepositories() },
-                    colors = colors,
-                    scrollState = scrollState
-                )
+                is RequestResponseUiState.OnSuccess -> {
+                    OnSuccessLoadingScreen(
+                        list = curState.item,
+                        onLoadMore = { viewModel.searchNewRepositories() },
+                        colors = colors,
+                        scrollState = scrollState
+                    )
+                }
             }
         }
     }
@@ -135,52 +150,18 @@ private fun OnSuccessLoadingScreen(
     scrollState: LazyListState
 ) {
     RepositoriesListScreen(
-        list = list,
-        colors = colors,
-        scrollState = scrollState,
-        footerContent = {
+        list = list, colors = colors, scrollState = scrollState, footerContent = {
             Button(
                 onClick = onLoadMore,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = colors.primary,
-                    contentColor = colors.textOnColor
+                    containerColor = colors.primary, contentColor = colors.textOnColor
                 ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
                 shape = RoundedCornerShape(8.dp)
             ) {
                 Text(stringResource(Res.string.load_more))
             }
-        }
-    )
-}
-
-@Composable
-private fun InProgressScreen(
-    list: ImmutableList<RepositoryPreview>,
-    colors: GitHubColors,
-    scrollState: LazyListState
-) {
-    RepositoriesListScreen(
-        list = list,
-        colors = colors,
-        scrollState = scrollState,
-        footerContent = {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(
-                    color = colors.primary,
-                    modifier = Modifier.size(24.dp),
-                    strokeWidth = 2.dp
-                )
-            }
-        }
-    )
+        })
 }
 
 @Composable
@@ -205,24 +186,15 @@ private fun OnFailureLoadingScreen(
         }
         if (list != null) {
             RepositoriesListScreen(
-                list = list,
-                colors = colors,
-                scrollState = scrollState,
-                footerContent = {
+                list = list, colors = colors, scrollState = scrollState, footerContent = {
                     Button(
-                        onClick = onRetry,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = colors.primary,
-                            contentColor = colors.textOnColor
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
+                        onClick = onRetry, colors = ButtonDefaults.buttonColors(
+                            containerColor = colors.primary, contentColor = colors.textOnColor
+                        ), modifier = Modifier.fillMaxWidth().padding(16.dp)
                     ) {
                         Text(stringResource(Res.string.retry))
                     }
-                }
-            )
+                })
         }
     }
 }
@@ -232,9 +204,7 @@ private fun EmptyScreen(
     colors: GitHubColors
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(32.dp),
+        modifier = Modifier.fillMaxSize().padding(32.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -266,16 +236,12 @@ private fun RepositoriesListScreen(
         state = scrollState
     ) {
         items(
-            items = list,
-            key = { "${it.repositoryName}_${it.owner}" }
-        ) { item ->
+            items = list, key = { "${it.repositoryName}_${it.owner}" }) { item ->
             RepositoryPreviewItem(
                 repositoryPreview = item,
                 colors = colors,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { /* Navigate to repository details */ }
-            )
+                modifier = Modifier.fillMaxWidth()
+                    .clickable { /* Navigate to repository details */ })
         }
 
         item {
@@ -286,9 +252,7 @@ private fun RepositoriesListScreen(
 
 @Composable
 private fun RepositoryPreviewItem(
-    repositoryPreview: RepositoryPreview,
-    colors: GitHubColors,
-    modifier: Modifier = Modifier
+    repositoryPreview: RepositoryPreview, colors: GitHubColors, modifier: Modifier = Modifier
 ) {
     Surface(
         modifier = modifier.padding(horizontal = 16.dp, vertical = 4.dp),
@@ -297,9 +261,7 @@ private fun RepositoryPreviewItem(
         tonalElevation = 1.dp
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(12.dp),
+            modifier = Modifier.fillMaxWidth().padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
@@ -312,9 +274,7 @@ private fun RepositoryPreviewItem(
                         model = repositoryPreview.owner.avatarUrl,
                         contentDescription = stringResource(Res.string.user_avatar),
                         placeholder = painterResource(Res.drawable.ic_empty_photo),
-                        modifier = Modifier
-                            .size(20.dp)
-                            .clip(shape = RoundedCornerShape(8.dp))
+                        modifier = Modifier.size(20.dp).clip(shape = RoundedCornerShape(8.dp))
                     )
 
                     Spacer(modifier = Modifier.width(4.dp))
@@ -340,9 +300,7 @@ private fun RepositoryPreviewItem(
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Box(
-                        modifier = Modifier
-                            .size(6.dp)
-                            .clip(CircleShape)
+                        modifier = Modifier.size(6.dp).clip(CircleShape)
                             .background(getLanguageColor(repositoryPreview.language, colors))
                     )
 
@@ -368,8 +326,7 @@ private fun RepositoryPreviewItem(
 }
 
 private fun getLanguageColor(
-    language: String?,
-    colors: GitHubColors
+    language: String?, colors: GitHubColors
 ): Color {
     return when (language?.lowercase()) {
         "kotlin" -> colors.languageKotlin
