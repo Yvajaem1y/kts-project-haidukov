@@ -14,33 +14,40 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import kts_project_haidukov.composeapp.generated.resources.Res
+import kts_project_haidukov.composeapp.generated.resources.go_to_login_button
+import kts_project_haidukov.composeapp.generated.resources.hello_message
 import kts_project_haidukov.composeapp.generated.resources.ic_empty_photo
+import kts_project_haidukov.composeapp.generated.resources.image_description
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun HelloScreen(
-    goToLogin : () -> Unit
-){
+    goToLogin: () -> Unit
+) {
     Column(
         modifier = Modifier.statusBarsPadding().fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         AsyncImage(
-            model = "https://avatars.mds.yandex.net/i?id=ccc69626162807c656adfabaf538e35e_l-10340155-images-thumbs&n=13",
-            contentDescription = "image",
+            model = "https://cs12.pikabu.ru/post_img/2020/12/17/0/og_og_1608153151237810491.jpg",
+            contentDescription = stringResource(Res.string.image_description),
             placeholder = painterResource(Res.drawable.ic_empty_photo),
             modifier = Modifier.size(300.dp),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            error = painterResource(Res.drawable.ic_empty_photo),
         )
 
-        Text("Hello")
+        Text(
+            text = stringResource(Res.string.hello_message)
+        )
+
         Button(
-            onClick = { goToLogin() }
-        ){
-            Text("Go to login")
+            onClick = { goToLogin() }) {
+            Text(
+                text = stringResource(Res.string.go_to_login_button)
+            )
         }
     }
-
-
 }
