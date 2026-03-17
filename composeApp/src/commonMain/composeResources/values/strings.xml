@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Hello screen strings -->
+    <string name="hello_message">Hello</string>
+    <string name="hello_subtitle">Welcome to GitHub Explorer</string>
+    <string name="go_to_login_button">Go to login</string>
+    <string name="continue_as_guest">Continue as guest</string>
+    <string name="image_description">Welcome image</string>
+
     <!-- Login screen strings -->
     <string name="login_placeholder">Enter your login</string>
     <string name="password_placeholder">Enter your password</string>
@@ -8,15 +15,37 @@
     <string name="login_button">Login</string>
     <string name="success_button">Success</string>
     <string name="button_error">Try again</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="no_account">Don\'t have an account? Sign up</string>
 
-    <!-- Hello screen strings -->
-    <string name="hello_message">Hello</string>
-    <string name="go_to_login_button">Go to login</string>
-    <string name="image_description">Welcome image</string>
+    <!-- Repositories screen strings -->
+    <string name="search_placeholder">Search repositories...</string>
+    <string name="load_more">Load more repositories</string>
+    <string name="no_repositories_title">No repositories found</string>
+    <string name="no_repositories_description">Start typing to search for GitHub repositories</string>
+    <string name="retry">Try again</string>
+    <string name="loading">Loading...</string>
 
-    <!-- Main screen strings -->
+    <!-- Favourites screen strings -->
+    <string name="favourites_title">Favourite repositories</string>
+    <string name="no_favourites_title">No favourites yet</string>
+    <string name="no_favourites_description">Star repositories to add them to favourites</string>
+
+    <!-- Profile screen strings -->
+    <string name="profile_title">Profile</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="repositories">Repositories</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="settings">Settings</string>
+    <string name="sign_out">Sign out</string>
+
+    <!-- Common strings -->
     <string name="online">online</string>
     <string name="user_avatar">userAvatar</string>
     <string name="user_avatar_placeholder">userAvatar placeholder</string>
     <string name="unknown_error">Unknown error</string>
+    <string name="retry_button">Retry</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
 </resources>
