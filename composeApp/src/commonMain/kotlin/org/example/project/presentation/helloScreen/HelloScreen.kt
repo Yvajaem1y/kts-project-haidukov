@@ -1,4 +1,4 @@
-package org.example.project.helloScreen
+package org.example.project.presentation.helloScreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

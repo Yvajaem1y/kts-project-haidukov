@@ -1,4 +1,4 @@
-package org.example.project.appNavigate
+package org.example.project.presentation.appNavigate
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -6,9 +6,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import kotlinx.serialization.Serializable
-import org.example.project.helloScreen.HelloScreen
-import org.example.project.loginScreen.LoginScreen
-import org.example.project.mainScreen.MainScreen
+import org.example.project.presentation.helloScreen.HelloScreen
+import org.example.project.presentation.loginScreen.LoginScreen
+import org.example.project.presentation.mainScreen.MainScreen
 
 @Serializable
 private sealed class Routes(val route: String) {
